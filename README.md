@@ -1,4 +1,4 @@
-# {rust-project-template}
+# shadowtech-api
 ![GitHub workflow Status](https://img.shields.io/github/workflow/status/joxcat/shadow-private-api/master?style=flat-square)
 ![License GitHub](https://img.shields.io/github/license/joxcat/shadow-private-api?style=flat-square)
 ![GitHub release (lasted SemVer)](https://img.shields.io/github/release/joxcat/shadow-private-api?sort=semver&style=flat-square)
