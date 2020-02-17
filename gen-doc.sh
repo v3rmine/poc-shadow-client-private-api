@@ -1,1 +1,4 @@
-cargo doc --no-deps --document-private-items --target-dir ./docs
+#!/bin/bash
+cargo doc --no-deps
+rm -rf ./docs
+cp -r ./target/doc/shadowtech_api ./docs
