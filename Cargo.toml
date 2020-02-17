@@ -6,7 +6,7 @@ edition = "2018"
 description = "Library to use to Shadow.tech private API (Fairly small API for the moment)"
 publish = false # Change to publish on crates.io
 
-documentation = "https://planchon.xyz/shadow-private-api"
+documentation = "https://planchon.xyz/shadow-private-api/shadowtech_api"
 homepage = "https://github.com/joxcat/shadow-private-api"
 repository = "https://github.com/joxcat/shadow-private-api"
 
