@@ -3,25 +3,25 @@ extern crate shadowtech_api;
 
 use dotenv::var;
 
-use shadowtech_api::log::{LogQuery, LogQueryMetadata, LogQueryValues};
+use shadowtech_api::log;
 use shadowtech_api::Shadow;
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
   dotenv::dotenv()?;
 
-  let s = Shadow::new(
+  let mut s = Shadow::new(
     var("EMAIL")?,
     var("PASSWORD")?,
     var("SESSION_UUID")?,
     var("SHADOW_UUID")?,
   )?;
 
-  let resp = s.log(LogQuery {
+  let resp = s.log(log::LogQuery {
     version: 1,
     name: "launcher.status",
     timestamp: std::time::Instant::now().elapsed().as_millis() as u64,
     privacy: "PUBLIC",
-    metadata: LogQueryMetadata {
+    metadata: log::LogQueryMetadata {
       version: "4.12.2",
       packager_version: "5.0.402",
       launcher_version: "4.12.2",
@@ -39,7 +39,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
       total_memory: "4",
       graphic_card: "Intel HD Graphics 3000",
     },
-    values: LogQueryValues {
+    values: log::LogQueryValues {
       status: "HEARTBEAT",
     },
   });

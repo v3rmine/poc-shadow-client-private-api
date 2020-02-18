@@ -1,11 +1,10 @@
-use crate::auth;
 use crate::constants::{
   DEFAULT_ACCEPT_ENCODING, DEFAULT_ACCEPT_LANGUAGE, DEFAULT_SHADOW_AGENT, DEFAULT_USER_AGENT,
 };
-use crate::{client::InnerResponse, Shadow, ToResp};
+use crate::{Response, Shadow, ToResp};
 
 impl Shadow {
-  pub fn start_vm(&self) -> Response {
+  pub fn start_vm(&mut self) -> Response<String> {
     // TODO self.inner.computer.url
     ureq::post(&format!(
       "{}/shadow/vm/start",
@@ -23,16 +22,16 @@ impl Shadow {
       "Authorization",
       &format!(
         "Token {}",
-        match &self.inner.computer.token {
-          Some(x) => x,
+        &(match &self.inner.computer.token {
+          Some(x) => x.to_owned(),
           None => {
             self.inner.computer.token = Some(self.auth_login()?.raw_response.unwrap().token);
-            self.inner.computer.token
+            self.inner.computer.token.as_ref().unwrap().to_owned()
           }
-        }
+        })
       ),
     )
-    .call()?
+    .call()
     .to_response()
   }
 }

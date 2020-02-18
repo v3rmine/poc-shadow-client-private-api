@@ -1,20 +1,20 @@
 extern crate dotenv;
 extern crate shadowtech_api;
 
-use shadowtech_api::auth::control;
-use shadowtech_api::{Result, Shadow};
+use shadowtech_api::computer;
+use shadowtech_api::Shadow;
 
 use dotenv::var;
 
-fn main() -> Result<()> {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
   dotenv::dotenv()?;
 
-  let s = Shadow::new(
+  let mut s = Shadow::new(
     var("EMAIL")?,
     var("PASSWORD")?,
-    var("SESSION_UUID"),
-    var("SHADOW_UUID"),
-  );
+    var("SESSION_UUID")?,
+    var("SHADOW_UUID")?,
+  )?;
 
   let resp = s.start_vm()?;
 

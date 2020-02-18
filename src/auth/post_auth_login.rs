@@ -9,7 +9,7 @@ use crate::{client::InnerResponse, Response, Shadow, ToResp};
 
 #[derive(Deserialize, Debug, Clone)]
 pub struct AuthLoginResponse {
-  token: String,
+  pub token: String,
 }
 
 impl Shadow {
