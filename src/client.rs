@@ -5,24 +5,24 @@ use crate::{
 
 use std::collections::HashMap;
 
-//#[cfg(logging)]
+#[cfg(feature = "logging")]
 use crate::log::LogEnv;
 
-pub type Response = Result<InnerResponse>;
+pub type Response<T> = Result<InnerResponse<T>>;
 #[derive(Debug, Clone)]
-pub struct InnerResponse {
+pub struct InnerResponse<T> {
   pub headers: HashMap<String, String>,
   pub status_code: u16,
   pub status: Status,
-  pub raw_response: String,
+  pub raw_response: Option<T>,
 }
 
 pub trait ToResp {
-  fn to_response(self) -> Response;
+  fn to_response(self) -> Response<String>;
 }
 
 impl ToResp for ureq::Response {
-  fn to_response(self) -> Response {
+  fn to_response(self) -> Response<String> {
     let mut headers: HashMap<String, String> = HashMap::new();
 
     for k in self.headers_names().iter() {
@@ -44,7 +44,7 @@ impl ToResp for ureq::Response {
       headers,
       status_code: self.status(),
       status,
-      raw_response: self.into_string()?,
+      raw_response: Some(self.into_string()?),
     })
   }
 }
@@ -72,7 +72,7 @@ pub struct Shadow {
 pub struct ShadowDynamic {
   pub general: GeneralEnv,
   pub status: StatusEnv,
-  //#[cfg(logging)]
+  #[cfg(feature = "logging")]
   pub log: LogEnv,
   pub computer: ComputerEnv,
   pub auth: AuthEnv,
@@ -81,7 +81,7 @@ pub struct ShadowDynamic {
 }
 
 impl Shadow {
-  fn new(
+  pub fn new(
     email: String,
     password: String,
     session_uuid: String,
@@ -95,14 +95,23 @@ impl Shadow {
       inner: ShadowDynamic::default()?,
     })
   }
+  pub fn empty() -> Result<Self> {
+    Ok(Self {
+      email: String::new(),
+      password: String::new(),
+      session_uuid: String::new(),
+      shadow_uuid: String::new(),
+      inner: ShadowDynamic::default()?,
+    })
+  }
 }
 
 impl ShadowDynamic {
-  fn default() -> Result<Self> {
+  pub fn default() -> Result<Self> {
     Ok(Self {
       general: GeneralEnv::default()?,
       status: StatusEnv::default()?,
-      //#[cfg(logging)]
+      #[cfg(feature = "logging")]
       log: LogEnv::default(),
       computer: ComputerEnv::default(),
       auth: AuthEnv::default()?,
