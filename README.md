@@ -2,7 +2,6 @@
 ![GitHub workflow Status](https://img.shields.io/github/workflow/status/joxcat/shadow-private-api/master?style=flat-square)
 ![License GitHub](https://img.shields.io/github/license/joxcat/shadow-private-api?style=flat-square)
 ![GitHub release (lasted SemVer)](https://img.shields.io/github/release/joxcat/shadow-private-api?sort=semver&style=flat-square)
-[![Slack chat](https://img.shields.io/badge/chat-on%20slack-brightgreen?style=flat-square)](https://{Project.slack_url})
 [![Doc](https://img.shields.io/badge/documentation-rustdoc-purple?style=flat-square)](https://joxcat.github.io/shadow-private-api/shadowtech_api)
 
 Library to use to Shadow.tech private API (Fairly small API for the moment). Endpoints where found using Web Debugging Proxy and test where made using [Insomnia](https://github.com/Kong/insomnia).
